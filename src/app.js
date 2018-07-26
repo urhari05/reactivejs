@@ -1,7 +1,23 @@
-// importing lodash module
-import _ from 'lodash';
+import {Observable} from 'rxjs';
+let numbers = [1,2,3];
+let source = Observable.from(numbers);
 
-const array = [1];
-const other = _.concat(array, 2, [3], [[4]]);
+class MyObserver {
+    next(value) {
+        console.log(`value: ${value}`);
+    }
+    error(e) {
+        console.log(`error: ${e}`);
+    }
+    complete() {
+        console.log('completed');
+    }
+}
 
-alert(other); // [1, 2, 3, [4]]
+source.subscribe(new MyObserver());
+
+source.subscribe(
+    (value) => console.log(`value: ${value}`),
+    e => console.log(`error: ${e}`),
+    () => console.log('completed')
+)
